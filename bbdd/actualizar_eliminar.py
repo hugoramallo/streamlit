@@ -24,7 +24,7 @@ try:
     # Eliminar usuario
     result_delete = cursor.execute(
         "DELETE FROM usuarios WHERE id = ?",
-        (1,)
+        (7,)
     )
 
     # Verificamos si se eliminó algún registro

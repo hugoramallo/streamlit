@@ -7,7 +7,7 @@ usuarios = [
     ("Pepe", "pepe@mail.com"),
     ("Manuel", "manuel@mail.com"),
     ("Elena", "elena@mail.com"),
-    ("Ana", "ana@mail.com")  # <- Email duplicado para probar el manejo de errores
+    ("Patricia", "patricia@mail.com")  # <- Email duplicado para probar el manejo de errores
 ]
 
 try:
@@ -16,7 +16,7 @@ try:
     cursor = conn.cursor()
 
     # Ejecutamos INSERTS
-    cursor.execute("INSERT INTO usuarios (nombre, email) VALUES (?, ?)", ("Ana", "ana@mail.com"))
+    cursor.execute("INSERT INTO usuarios (nombre, email) VALUES (?, ?)", ("Ana María", "anamaria@mail.com"))
     cursor.execute("INSERT INTO usuarios (nombre, email) VALUES (?, ?)", ("Luis", "luis@mail.com"))
     cursor.execute("INSERT INTO usuarios (nombre, email) VALUES (?, ?)", ("Sofía", "sofia@mail.com"))
 

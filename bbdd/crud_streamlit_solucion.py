@@ -10,17 +10,21 @@ def get_connection():
 # Título principal de la app
 st.title("Gestión de Usuarios")
 
-# Menú lateral con opciones del CRUD
+# Menú lateral izquierdo con opciones del CRUD
 menu = st.sidebar.selectbox("Opciones", ["Ver usuarios", "Agregar", "Actualizar", "Eliminar"])
 
 # Opción 1 - ver usuarios
 if menu == "Ver usuarios":
+    conn = None  # Declaración previa
     try:
         conn = get_connection()  # Conectamos a la base de datos
         df = pd.read_sql_query("SELECT * FROM usuarios", conn)  # Ejecutamos SELECT y lo cargamos en DataFrame
         st.dataframe(df)  # Mostramos la tabla
     except Exception as e:
         st.error(f"Error al consultar la base de datos: {e}")  # Mostramos el error en la interfaz
+    finally:
+        if conn:
+            conn.close()
 
 # Opción 2: Agregar nuevo usuario
 elif menu == "Agregar":
@@ -29,6 +33,7 @@ elif menu == "Agregar":
 
     if st.button("Agregar"):  # Si se presiona el botón
         if nombre and email:  # Validamos que no estén vacíos
+            conn = None  # Declaración previa
             try:
                 conn = get_connection()
                 conn.execute("INSERT INTO usuarios (nombre, email) VALUES (?, ?)", (nombre, email))  # Inserta los datos
@@ -36,6 +41,9 @@ elif menu == "Agregar":
                 st.success("Usuario agregado")  # Mensaje de éxito
             except Exception as e:
                 st.error(f"No se pudo agregar el usuario: {e}")  # Captura y muestra error
+            finally:
+                if conn:
+                    conn.close()
         else:
             st.warning("Por favor, completa todos los campos.")  # Validación simple
 
@@ -45,6 +53,7 @@ elif menu == "Actualizar":
     nuevo_nombre = st.text_input("Nuevo nombre")  # Campo para el nuevo nombre
 
     if st.button("Actualizar"):
+        conn = None  # Declaración previa
         if nuevo_nombre:  # Verificamos que no esté vacío
             try:
                 conn = get_connection()
@@ -57,6 +66,9 @@ elif menu == "Actualizar":
                     st.success("Usuario actualizado")  # Confirmación
             except Exception as e:
                 st.error(f"No se pudo actualizar el usuario: {e}")  # Error al actualizar
+            finally:
+                if conn:
+                    conn.close()
         else:
             st.warning("El nuevo nombre no puede estar vacío.")  # Validación
 
@@ -65,6 +77,7 @@ elif menu == "Eliminar":
     id_borrar = st.number_input("ID del usuario a eliminar", min_value=1)  # Campo para ID
 
     if st.button("Eliminar"):
+        conn = None  # Declaración previa
         try:
             conn = get_connection()
             result = conn.execute("DELETE FROM usuarios WHERE id = ?", (id_borrar,))  # Ejecuta el DELETE
@@ -76,3 +89,6 @@ elif menu == "Eliminar":
                 st.warning("Usuario eliminado")  # Confirmación de borrado
         except Exception as e:
             st.error(f"No se pudo eliminar el usuario: {e}")  # Captura y muestra el error
+        finally:
+            if conn:
+                conn.close()
