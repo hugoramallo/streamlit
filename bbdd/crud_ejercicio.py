@@ -21,3 +21,6 @@
 # - Cerrar conexión siempre con finally
 
 # Empieza tu código debajo:
+
+#PODEMOS USAR   st.title(), st.text_input(), st.number_input(), st.sidebar.selectbox()
+# st.dataframe(), st.button(), st.warning(), st.error(), st.success(),

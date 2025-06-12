@@ -5,7 +5,12 @@ import pandas as pd            # Para manipular y mostrar datos como tablas
 
 # Función reutilizable para obtener la conexión a la base de datos
 def get_connection():
-    return sqlite3.connect("usuarios.db")
+    try:
+        conn = sqlite3.connect("usuarios.db")
+        return conn
+    except sqlite3.Error as e:
+        st.error(f"No se pudo conectar a la base de datos: {e}")
+        return None # Devuelvo null
 
 # Título principal de la app
 st.title("Gestión de Usuarios")

@@ -1,4 +1,4 @@
-import sqlite3
+import sqlite3 # Librería de sqlite
 
 try:
     # Conectar a la base de datos (crea el archivo si no existe)
