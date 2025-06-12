@@ -27,8 +27,7 @@ try:
     )
     """)
 
-    # Insertamos usuarios
-    # INSERT or IGNORE, inserta si no está el dato o IGNORA si está repetida por clave primaria (PRIMARY KEY) o UNIQUE
+    # Insertar roles base si no existen
     cursor.executemany("INSERT OR IGNORE INTO roles (nombre) VALUES (?)", [
         ("admin",),
         ("editor",),
@@ -42,12 +41,10 @@ try:
         ("Mario", "mario@mail.com", 3)  # lector
     ]
 
-    # Insertar roles base si no existen
-    cursor.executemany("INSERT OR IGNORE INTO roles (nombre) VALUES (?)", [
-        ("admin",),
-        ("editor",),
-        ("lector",)
-    ])
+    # Insertamos usuarios
+    # INSERT or IGNORE, inserta si no está el dato o IGNORA si está repetida por clave primaria (PRIMARY KEY) o UNIQUE
+    cursor.executemany("INSERT OR IGNORE INTO usuarios (nombre, email, rol_id) VALUES (?,?,?)", usuarios)
+
 
     conn.commit()
     print("Base de datos relacional creada correctamente.")
