@@ -3,6 +3,7 @@ import asyncio
 # Función que simula una tarea que tarda 'segundos' en completarse
 async def tarea(nombre, segundos):
     print(f"{nombre} iniciada")
+    # Pauso esta tarea (1) y dejo pasar otras
     await asyncio.sleep(segundos)
     print(f"{nombre} completada")
 
